@@ -208,14 +208,16 @@ CSSAVE  DW      ?
 FSAVE   DW      ?
 STKPTRS ENDS
 
-; Start of code
+;-----------------------------------------------------------------------;
+; Start of code                                                         ;
+;-----------------------------------------------------------------------;
 
 CODE    SEGMENT
 ASSUME  CS:DOSGROUP,DS:DOSGROUP,ES:DOSGROUP,SS:DOSGROUP
 
         ORG     0
 CODSTRT EQU     $
-        JMP     DOSINIT
+        JMP     DOSINIT 
 
 ESCCHAR DB      ESCCH   ;Lead-in character for escape sequences
 ESCTAB: 
@@ -3751,6 +3753,11 @@ FLGFAT:
 XXX     PROC FAR
         RET
 XXX     ENDP
+
+;-----------------------------------------------------------------------;
+; The program jumps to this place immediately.  So actually this is the ;
+; start of code.                                                        ;
+;-----------------------------------------------------------------------;
 
 DOSINIT:
         CLI
