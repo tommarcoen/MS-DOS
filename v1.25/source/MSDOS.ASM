@@ -3764,10 +3764,18 @@ DOSINIT:
         CLD
         PUSH    CS
         POP     ES
-        MOV     ES:[ENDMEM],DX
+        MOV     ES:[ENDMEM],DX  ;NOTE: I wonder what value is in DX
+        ; LODSB: Load byte at address DS:SI into AL - but where is DS:SI
+        ; pointing to?
         LODSB                   ;Get no. of drives & no. of I/O drivers
         MOV     ES:[NUMIO],AL
         MOV     DI,OFFSET DOSGROUP:MEMSTRT
+
+;-----------------------------------------------------------------------;
+; This seems to be a loop to be run "per drive" or for each drive.  It  ;
+; starts at 0 (DRVCNT) and then runs up until it reaches the value of   ;
+; NUMIO (see lines 3859-3864).                                          ;
+;-----------------------------------------------------------------------;
 PERDRV:
         MOV     BP,DI
         MOV     AL,ES:[DRVCNT]
